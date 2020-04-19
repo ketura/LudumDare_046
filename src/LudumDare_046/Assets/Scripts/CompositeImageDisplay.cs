@@ -27,8 +27,6 @@ public class CompositeImageDisplay : MonoBehaviour
 	{
 		DisplayTier = GeneTier.One;
 		LastTier = GeneTier.Ultimate;
-
-		UpdateAllSprites();
 	}
 
 	private void Update()

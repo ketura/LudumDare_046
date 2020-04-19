@@ -6,9 +6,7 @@ You are the Goddess of Ants, patron of a million hives and mother to a trillion 
 
 Now your mighty empire of worshipers has been reduced to but a single, lowly worker that managed to escape the destruction.  
 
-You're sure you could uplift this humble survivor to a mighty Queen, capable of spawning a civilization greater and more terrible than ever before.  It would even be easy--if your head would just stop throbbing.
-
-You begin reaching out into your memories and exerting your divine will, weaving and splicing the genes your only remaining daughter needs...
+You're sure you could uplift this humble survivor to a mighty Queen, capable of spawning a civilization greater and more terrible than ever before.  You begin reaching out into your memories and exerting your divine will, weaving and splicing the genes your only remaining daughter needs...
 
 
 ------------
@@ -48,16 +46,16 @@ anita is damaged and unmoving.  First draw and get parts + blessings to swap out
 
 TODO:
 
-- implement hot-swappable wander behavior on Anita that:
-	- stays within the bounds of the map
-	- is aware of points of interest within the detection radius
-	- based on speed
-- implement health on Anita
-- implement fights between Anita and enemies
-	- enemies approach Anita
-	- Anita/enemy attacks based on cooldown of ability (bite low, stinger high)
-- enemy/food spawning
-- prop up scene progression
++ implement hot-swappable wander behavior on Anita that:
+	+ stays within the bounds of the map
+	+ is aware of points of interest within the detection radius
+	+ based on speed
++ implement health on Anita
++ implement fights between Anita and enemies
+	+ enemies approach Anita
+	+ Anita/enemy attacks based on cooldown of ability (bite low, stinger high)
++ enemy/food spawning
++ prop up scene progression
 - set up card collection/card definitions
 - deck/card/action displays
 - discard card/draw card
@@ -66,6 +64,7 @@ TODO:
 	- gene combine
 	- part + gene combine
 	- gene mutate
+- body part stat change on Anita
 - audio:
 	- card smack
 	- shuffle
@@ -84,3 +83,4 @@ TODO:
 	- march bassline music
 	- ultimate attach fanfare
 	- combine gene fanfare
+- add event log to left of top screen
