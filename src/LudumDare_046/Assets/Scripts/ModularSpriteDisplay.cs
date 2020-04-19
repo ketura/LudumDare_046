@@ -5,16 +5,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public struct NamedSprite
-{
-	public GeneTier Tier;
-	public Sprite Sprite;
-}
 
 public class ModularSpriteDisplay : MonoBehaviour
 {
-	public Image Renderer;
+	public BodyPart PartType;
+	public SpriteRenderer Renderer;
 
 	public List<NamedSprite> Sprites;
 
@@ -28,18 +23,13 @@ public class ModularSpriteDisplay : MonoBehaviour
 		LastTier = GeneTier.Ultimate;
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void UpdateSprite(GeneTier tier)
 	{
-		if(LastTier != DisplayTier)
-		{
-			UpdateSprite();
-		}
-	}
+		if (LastTier == tier)
+			return;
 
-	public void UpdateSprite()
-	{
 		Renderer.sprite = Sprites.Where(x => x.Tier == DisplayTier).First().Sprite;
 		LastTier = DisplayTier;
 	}
+
 }

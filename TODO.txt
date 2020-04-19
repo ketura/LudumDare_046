@@ -1,0 +1,86 @@
+
+
+You are the Goddess of Ants, patron of a million hives and mother to a trillion trillion souls.
+
+...or you were, up until that stuck-up Goddess of Anteaters waged war after you got drunk at that one party.  You might have fended her off, though, if your treacherous sister the Goddess of Bees hadn't stung you in the back at the same time.  
+
+Now your mighty empire of worshipers has been reduced to but a single, lowly worker that managed to escape the destruction.  
+
+You're sure you could uplift this humble survivor to a mighty Queen, capable of spawning a civilization greater and more terrible than ever before.  It would even be easy--if your head would just stop throbbing.
+
+You begin reaching out into your memories and exerting your divine will, weaving and splicing the genes your only remaining daughter needs...
+
+
+------------
+
+
+Body Parts have reduced effectiveness at 75%, 25%, and 0% health.
+75%: half effectiveness
+25%: down a tier
+0%: down two tiers OR half effectiveness of previous tier
+
+Blessing cards recieved at regular intervals (~3 seconds or 3 of every Anita's actions) and are destroyed on use.
+Gene cards (Shoddy, Passable, Alpha/Beta/Gamma) are used to modify Blessing actions and are obtained by Anita foraging or defeating enemies
+Part cards are crafted by the player and can be swapped with Anita's current part with a Blessing.  One of each part composes the starting deck, and Parts are rarely found by Anita.
+
+Use a Blessing on one of Anita's parts to swap it with a compatible one in your hand.
+Use a Blessing on a body part in hand to combine it with a Gene in your hand (turns the part to the associated level of the gene, consumes Gene)
+Use a Blessing to combine three Genes of the same level into one of a level up
+Use a Blessing on a specialized Gene to mutate it
+
+
+5 blessing cards max in your deck
+cannot create an Alpha/Beta/Gamma part more than once
+5 card hand
+right-click on a card to discard it and draw a new one
+double-click on a card to lock or unlock it 
+
+
+
+--------
+
+intro tutorial:
+
+anita is damaged and unmoving.  First draw and get parts + blessings to swap out all the parts.  Anita then forages and gets some Genes.  Use blessings to combine Genes.  Use blessings to upgrade parts.  Anita is damaged again. Apply upgraded parts to Anita with blessings.
+
+
+----
+
+TODO:
+
+- implement hot-swappable wander behavior on Anita that:
+	- stays within the bounds of the map
+	- is aware of points of interest within the detection radius
+	- based on speed
+- implement health on Anita
+- implement fights between Anita and enemies
+	- enemies approach Anita
+	- Anita/enemy attacks based on cooldown of ability (bite low, stinger high)
+- enemy/food spawning
+- prop up scene progression
+- set up card collection/card definitions
+- deck/card/action displays
+- discard card/draw card
+- actions available based on cards in hand
+	- part swap
+	- gene combine
+	- part + gene combine
+	- gene mutate
+- audio:
+	- card smack
+	- shuffle
+	- action performed swoop or ding
+	- anita walk
+	- anita gather food
+	- anita bite
+	- anita sting
+	- anita hurt
+	- anita die
+	- enemy attack
+	- enemy hurt
+	- enemy die
+	- defeat fanfare
+	- victory fanfare
+	- march bassline music
+	- ultimate attach fanfare
+	- combine gene fanfare
