@@ -2,17 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BodyPart
-{
-	None,
-	Mandibles,
-	Antennae,
-	Head,
-	Thorax,
-	Abdomen,
-	Legs,
-	Wings
-}
+
 
 public class CompositeImageDisplay : MonoBehaviour
 {
