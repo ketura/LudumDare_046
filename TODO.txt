@@ -56,15 +56,15 @@ TODO:
 	+ Anita/enemy attacks based on cooldown of ability (bite low, stinger high)
 + enemy/food spawning
 + prop up scene progression
-- set up card collection/card definitions
-- deck/card/action displays
++ set up card collection/card definitions
++ deck/card/action displays
 - discard card/draw card
 - actions available based on cards in hand
 	- part swap
 	- gene combine
 	- part + gene combine
 	- gene mutate
-- body part stat change on Anita
++ body part stat change on Anita
 - audio:
 	- card smack
 	- shuffle
@@ -84,3 +84,11 @@ TODO:
 	- ultimate attach fanfare
 	- combine gene fanfare
 - add event log to left of top screen
+
+
+-functions for card display objects to show:
+	- empty slot
+	- gene card
+	- part card
+	- blessing card?
+- scale back the functionality nerfs when damaged

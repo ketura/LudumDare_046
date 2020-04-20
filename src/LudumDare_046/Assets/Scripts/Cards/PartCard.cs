@@ -16,7 +16,7 @@ public enum BodyPart
 
 
 
-public class PartCard : MonoBehaviour
+public class PartCard : Card
 {
 	public BodyPart PartType;
 

@@ -10,9 +10,9 @@ public class Deck : MonoBehaviour
 	private System.Random rng;
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
 	{
-		rng = new System.Random(unchecked(Time.frameCount * 31 ));
+		rng = new System.Random((int)unchecked(System.DateTime.Now.Ticks * 31 ));
 	}
 
 	// Update is called once per frame
@@ -44,8 +44,18 @@ public class Deck : MonoBehaviour
 		return card;
 	}
 
-	public void InsertCards(IEnumerable<Card> newcards)
+	public void AddCardsToBottom(IEnumerable<Card> newcards)
 	{
-		Cards.InsertRange(0, newcards);
+		Cards.InsertRange(Cards.Count, newcards);
+	}
+
+	public void AddCardToBottom(Card newcard)
+	{
+		Cards.Insert(Cards.Count, newcard);
+	}
+
+	public void EmptyDeck()
+	{
+		Cards.Clear();
 	}
 }

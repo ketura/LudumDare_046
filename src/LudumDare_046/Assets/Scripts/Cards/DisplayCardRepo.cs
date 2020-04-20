@@ -1,18 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
-public class DisplayCardRepo : MonoBehaviour
+public class DisplayCardRepo : Singleton<DisplayCardRepo>
 {
-	// Start is called before the first frame update
-	void Start()
-	{
-		
-	}
+	public Sprite GeneIcon;
+	public Sprite PartIcon;
+	public Sprite BlessingIcon;
 
-	// Update is called once per frame
-	void Update()
-	{
-		
-	}
+	public float GeneTextSize = 36;
+	public float PartTextSize = 20;
+	public float BlessingTextSize = 20;
 }
