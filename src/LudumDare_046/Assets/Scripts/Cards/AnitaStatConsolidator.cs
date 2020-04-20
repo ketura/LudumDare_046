@@ -216,31 +216,37 @@ public class AnitaStatConsolidator : MonoBehaviour
 			case BodyPart.Mandibles:
 				retval = Mandibles;
 				Mandibles = newPart;
+				Mandibles.CurrentHealth = Mandibles.MaxHealth;
 				break;
 
 			case BodyPart.Antennae:
 				retval = Antennae;
 				Antennae = newPart;
+				Antennae.CurrentHealth = Antennae.MaxHealth;
 				break;
 
 			case BodyPart.Head:
 				retval = Head;
 				Head = newPart;
+				Head.CurrentHealth = Head.MaxHealth;
 				break;
 
 			case BodyPart.Thorax:
 				retval = Thorax;
 				Thorax = newPart;
+				Thorax.CurrentHealth = Thorax.MaxHealth;
 				break;
 
 			case BodyPart.Abdomen:
 				retval = Abdomen;
 				Abdomen = newPart;
+				Abdomen.CurrentHealth = Abdomen.MaxHealth;
 				break;
 
 			case BodyPart.Legs:
 				retval = Legs;
 				Legs = newPart;
+				Legs.CurrentHealth = Legs.MaxHealth;
 				break;
 
 			default:

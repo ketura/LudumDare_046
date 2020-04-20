@@ -317,6 +317,36 @@ public class CardHandler : MonoBehaviour
 					break;
 
 				case CardType.Part:
+					if(Infuses.Slot1 == null)
+					{
+						InfuseSlot1.EnableSelection();
+					}
+
+					if(Equips.Slot1 == null)
+					{
+						EquipSlot.EnableSelection();
+					}
+
+					//if(Combines.IsEmpty() || !Combines.GetAllActiveCards().Any(x => x.CardType == CardType.Gene))
+					//{
+					//	var partcard = card as PartCard;
+						
+					//	if(partcard.Tier == GeneTier.Alpha || partcard.Tier == GeneTier.Beta || partcard.Tier == GeneTier.Gamma)
+					//	{
+					//		if (Combines.Slot1 == null)
+					//		{
+					//			CombineSlot1.EnableSelection();
+					//		}
+					//		if (Combines.Slot2 == null)
+					//		{
+					//			CombineSlot2.EnableSelection();
+					//		}
+					//		if (Combines.Slot3 == null)
+					//		{
+					//			CombineSlot3.EnableSelection();
+					//		}
+					//	}
+					//}
 					break;
 				case CardType.Blessing:
 					if (Equips.Slot1 != null)
@@ -326,12 +356,24 @@ public class CardHandler : MonoBehaviour
 
 					if (Combines.Slot1 != null && Combines.Slot2 != null && Combines.Slot3 != null)
 					{
+						//var combines = Combines.GetAllActiveCards().Select(x => x as PartCard);
+						//if (!combines.Any(x => x.CardType == CardType.Part) || 
+						//		(
+						//			combines.Any(x => x.Tier == GeneTier.Alpha) && combines.Any(x => x.Tier == GeneTier.Beta) && combines.Any(x => x.Tier == GeneTier.Gamma)
+						//		)
+						//	)
 						CombineButton.gameObject.SetActive(true);
 					}
 
 					if (Infuses.Slot1 != null && Infuses.Slot2 != null)
 					{
-						InfuseButton.gameObject.SetActive(true);
+						var oldPart = Infuses.GetCardAtSlot(1) as PartCard;
+						var oldGene = Infuses.GetCardAtSlot(2) as GeneCard;
+
+						if (oldPart.Tier < oldGene.Tier)
+						{
+							InfuseButton.gameObject.SetActive(true);
+						}
 					}
 					break;
 				default:
@@ -364,13 +406,24 @@ public class CardHandler : MonoBehaviour
 	public void SelectEquipSlot()
 	{
 		Debug.Log("Equip Select");
+
+		var card = Hand.RemoveCardAtSlot(SelectedHandSlot);
+		Equips.InsertCardAtSlot(1, card);
 		DeselectAll();
+		RedrawAll();
 	}
 
 	public void DiscardEquipSlot()
 	{
 		Debug.Log("Equip Discard");
-		DeselectAll();
+		var card = Equips.RemoveCardAtSlot(1);
+
+		if (card != null)
+		{
+			Deck.AddCardToBottom(card);
+		}
+
+		RedrawAll();
 	}
 
 	public void SelectCombineSlot(int slot)
@@ -390,17 +443,43 @@ public class CardHandler : MonoBehaviour
 	public void DiscardCombineSlot(int slot)
 	{
 		Debug.Log($"Combine Discard ({slot})");
+		var card = Combines.RemoveCardAtSlot(slot);
+
+		if (card != null)
+		{
+			Deck.AddCardToBottom(card);
+		}
+
+		RedrawAll();
 	}
 
 	public void SelectInfuseSlot(int slot)
 	{
+		if (SelectedHandSlot == 0 ||
+			Infuses.GetCardAtSlot(slot) != null)
+			return;
+
 		Debug.Log($"Infuse Select ({slot})");
+
+
+		var card = Hand.RemoveCardAtSlot(SelectedHandSlot);
+		Infuses.InsertCardAtSlot(slot, card);
 		DeselectAll();
+		RedrawAll();
 	}
 
 	public void DiscardInfuseSlot(int slot)
 	{
 		Debug.Log($"Infuse Discard ({slot})");
+
+		var card = Infuses.RemoveCardAtSlot(slot);
+
+		if (card != null)
+		{
+			Deck.AddCardToBottom(card);
+		}
+
+		RedrawAll();
 	}
 
 	private int GetFirstEmptySlot()
@@ -462,13 +541,26 @@ public class CardHandler : MonoBehaviour
 	public void InvokeEquip()
 	{
 		Debug.Log($"Invoking Equip");
+
+
+		DiscardHandSlot(SelectedHandSlot);
+
+		var partCard = Equips.RemoveCardAtSlot(1) as PartCard;
+
+		var oldCard = AnitaStat.SwapPart(partCard.PartType, partCard);
+
+		Deck.AddCardToBottom(oldCard);
+
+		DeselectAll();
+		RedrawAll();
 	}
 
 	public void InvokeCombine()
 	{
 		Debug.Log($"Invoking Combine");
 
-		DiscardHandSlot(SelectedHandSlot);
+		int blessingSlot = SelectedHandSlot;
+		DiscardHandSlot(blessingSlot);
 
 		var combines = Combines.GetAllActiveCards();
 		Combines.RemoveAllCards();
@@ -485,23 +577,61 @@ public class CardHandler : MonoBehaviour
 				}
 			}
 
-			GeneTier newtier = (GeneTier)(oldTier + 1);
+			GeneTier newtier = GeneTier.Two;
 
-			var newcard = CardDefinitions.GeneCards.Where(x => x.Tier == newtier);
+			if (oldTier == (int)GeneTier.Two)
+			{
+				int rand = Random.Range((int)GeneTier.Alpha, (int)GeneTier.Ultimate);
+				newtier = (GeneTier)rand;
+			}
+			else if(oldTier == (int)GeneTier.Alpha || oldTier == (int)GeneTier.Beta || oldTier == (int)GeneTier.Gamma)
+			{
+				newtier = GeneTier.Ultimate;
+			}
+
+			var newcard = CardDefinitions.GeneCards.Where(x => x.Tier == newtier).First();
 
 			if (newcard == null)
 				Debug.Log("wtf man");
 
-			Hand.InsertCardAtSlot(SelectedHandSlot, newcard);
+			Hand.InsertCardAtSlot(blessingSlot, newcard);
 		}
+		//else if(combines.First().CardType == CardType.Part)
+		//{
+		//	foreach (var card in combines)
+		//	{
+		//		var genecard = card as GeneCard;
+		//		if ((int)genecard.Tier < oldTier)
+		//		{
+		//			oldTier = (int)genecard.Tier;
+		//		}
+		//	}
+		//}
 
-		
-
-		CardDefinitions
+		DeselectAll();
+		RedrawAll();
 	}
 
 	public void InvokeInfuse()
 	{
 		Debug.Log($"Invoking Infuse");
+
+		int blessingSlot = SelectedHandSlot;
+		DiscardHandSlot(blessingSlot);
+
+		var oldPart = Infuses.GetCardAtSlot(1) as PartCard;
+		var oldGene = Infuses.GetCardAtSlot(2) as GeneCard;
+
+		Infuses.RemoveAllCards();
+
+		var newcard = CardDefinitions.PartCards.Where(x => x.Tier == oldGene.Tier && x.PartType == oldPart.PartType).First();
+
+		if (newcard == null)
+			Debug.Log("wtf man");
+
+		Hand.InsertCardAtSlot(blessingSlot, newcard);
+
+		DeselectAll();
+		RedrawAll();
 	}
 }
