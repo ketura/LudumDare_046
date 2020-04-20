@@ -7,6 +7,10 @@ public class AnitaCreature : Creature
 {
 	public AnitaStatConsolidator StatConsolidator;
 
+	public AttackBehavior BiteAttack;
+	public AttackBehavior StingAttack;
+
+
 	public int BiteDamage = 1;
 	public float BiteAttackRange = 1.0f;
 	public float BiteWindup = 0.5f;
@@ -50,6 +54,9 @@ public class AnitaCreature : Creature
 
 	public override void Damage(int amount)
 	{
+		if (Health <= 0)
+			return;
+
 		StatConsolidator.TakeDamage(amount);
 
 		if(DamageReflection > 0)
@@ -71,7 +78,7 @@ public class AnitaCreature : Creature
 
 	public override void Die()
 	{
-
+		MovementSpeed = 0;
 		EndConditions.Instance.PlayerLose();
 
 

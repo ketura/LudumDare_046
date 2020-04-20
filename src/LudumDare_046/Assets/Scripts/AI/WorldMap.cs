@@ -9,7 +9,7 @@ public class WorldMap : Singleton<WorldMap>
 	public Vector2 XLimits;
 	public Vector2 YLimits;
 
-	public Creature Anita;
+	public AnitaCreature Anita;
 
 	public List<Creature> Creatures;
 

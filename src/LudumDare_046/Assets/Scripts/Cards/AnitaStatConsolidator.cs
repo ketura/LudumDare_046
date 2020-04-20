@@ -33,15 +33,21 @@ public class AnitaStatConsolidator : MonoBehaviour
 	public TMP_Text LegTierLabel;
 	public TMP_Text AbdomenTierLabel;
 
+	public CardCollection MasterCardDefinitions;
+
 	// Start is called before the first frame update
 	void Start()
 	{
-		Head = new PartCard();
-		Mandibles = new PartCard();
-		Antennae = new PartCard();
-		Legs = new PartCard();
-		Thorax = new PartCard();
-		Abdomen = new PartCard();
+		MasterCardDefinitions = CardCollection.Instance;
+
+		Head = MasterCardDefinitions.GetPartCard(BodyPart.Head);
+		Mandibles = MasterCardDefinitions.GetPartCard(BodyPart.Mandibles);
+		Antennae = MasterCardDefinitions.GetPartCard(BodyPart.Antennae);
+		Legs = MasterCardDefinitions.GetPartCard(BodyPart.Legs);
+		Thorax = MasterCardDefinitions.GetPartCard(BodyPart.Thorax);
+		Abdomen = MasterCardDefinitions.GetPartCard(BodyPart.Abdomen);
+
+		UpdateStats();
 	}
 
 	// Update is called once per frame
@@ -121,23 +127,35 @@ public class AnitaStatConsolidator : MonoBehaviour
 		SpriteDisplay.UpdateTier(BodyPart.Legs, Legs.Tier);
 		SpriteDisplay.UpdateTier(BodyPart.Abdomen, Abdomen.Tier);
 
-		Anita.BiteDamage = Mathf.CeilToInt(Mandibles.Modifier1 + (Mandibles.Modifier1 * (Legs.Modifier3 + Antennae.Modifier2)));
-		Anita.BiteAttackRange = Mandibles.Modifier2;
+		Anita.BiteDamage = Mathf.Max(Mathf.CeilToInt(Mandibles.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
+			Mathf.CeilToInt(Mandibles.Modifier1 * 0.1f));
+		Anita.BiteAttackRange = Mathf.Max(Mandibles.AdjustedModifier2, 0.5f);
 		Anita.BiteWindup = Mandibles.Modifier3;
 		Anita.BiteCooldown = Mandibles.Modifier4;
 
-		Anita.DetectionRadius = Antennae.Modifier1;
-		Anita.DropBonus = Mathf.FloorToInt(Antennae.Modifier3);
-		Anita.EvasionChance = Antennae.Modifier4 + Legs.Modifier2 + Thorax.Modifier3;
+		Anita.DetectionRadius = Mathf.Min(Antennae.AdjustedModifier1, 0.5f);
+		Anita.DropBonus = Mathf.FloorToInt(Antennae.AdjustedModifier3);
+		Anita.EvasionChance = Antennae.AdjustedModifier4 + Legs.AdjustedModifier2 + Thorax.AdjustedModifier3;
 
-		Anita.StingDamage = Mathf.CeilToInt(Abdomen.Modifier1 + (Mandibles.Modifier1 * (Legs.Modifier3 + Antennae.Modifier2)));
-		Anita.StingAttackRange = Abdomen.Modifier2;
+		Anita.StingDamage = Mathf.Max(Mathf.CeilToInt(Abdomen.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
+			Mathf.CeilToInt(Abdomen.Modifier1 * 0.1f));
+		Anita.StingAttackRange = Mathf.Max(Abdomen.AdjustedModifier2, 0.5f);
 		Anita.StingWindup = Abdomen.Modifier3;
 		Anita.StingCooldown = Abdomen.Modifier4;
 
-		Anita.MovementSpeed = Legs.Modifier1 * Thorax.Modifier2;
+		Anita.MovementSpeed = Mathf.Max(Legs.AdjustedModifier1 * Thorax.AdjustedModifier2, 2.0f);
 
-		Anita.DamageReflection = Thorax.Modifier1;
+		Anita.DamageReflection = Thorax.AdjustedModifier1;
+
+		Anita.BiteAttack.Damage = Anita.BiteDamage;
+		Anita.BiteAttack.AttackRange = Anita.BiteAttackRange;
+		Anita.BiteAttack.Windup = Anita.BiteWindup;
+		Anita.BiteAttack.Cooldown = Anita.BiteCooldown;
+
+		Anita.StingAttack.Damage = Anita.StingDamage;
+		Anita.StingAttack.AttackRange = Anita.StingAttackRange;
+		Anita.StingAttack.Windup = Anita.StingWindup;
+		Anita.StingAttack.Cooldown = Anita.StingCooldown;
 	}
 
 	public void TakeDamage(int damage)

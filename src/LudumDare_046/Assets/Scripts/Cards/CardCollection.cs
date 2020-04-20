@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utilities;
 
-public class CardCollection : MonoBehaviour
+public class CardCollection : Singleton<CardCollection>
 {
 	public List<PartCard> PartCards;
 	public List<GeneCard> GeneCards;
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
 	{
 		PartCards = GetComponents<PartCard>().ToList();
 		GeneCards = GetComponents<GeneCard>().ToList();
@@ -19,5 +20,10 @@ public class CardCollection : MonoBehaviour
 	void Update()
 	{
 		
+	}
+
+	public PartCard GetPartCard(BodyPart part)
+	{
+		return PartCards.Where(x => x.PartType == part).First();
 	}
 }

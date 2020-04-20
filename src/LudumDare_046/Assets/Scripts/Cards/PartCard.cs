@@ -52,6 +52,19 @@ public class PartCard : MonoBehaviour
 	public float Modifier4;
 
 
+	public float HealthPercentage => CurrentHealth / MaxHealth;
+
+	public float AdjustedModifier1 => Modifier1 * HealthPercentage;
+	public float AdjustedModifier2 => Modifier2 * HealthPercentage;
+	public float AdjustedModifier3 => Modifier3 * HealthPercentage;
+	public float AdjustedModifier4 => Modifier4 * HealthPercentage;
+
+	public float InvertedModifier1 => HealthPercentage <= 0.1f ? 5.0f : Modifier1 * Mathf.Min(1 / HealthPercentage, 5.0f);
+	public float InvertedModifier2 => HealthPercentage <= 0.1f ? 5.0f : Modifier2 * Mathf.Min(1 / HealthPercentage, 5.0f);
+	public float InvertedModifier3 => HealthPercentage <= 0.1f ? 5.0f : Modifier3 * Mathf.Min(1 / HealthPercentage, 5.0f);
+	public float InvertedModifier4 => HealthPercentage <= 0.1f ? 5.0f : Modifier4 * Mathf.Min(1 / HealthPercentage, 5.0f);
+
+
 	// Start is called before the first frame update
 	void Start()
 	{

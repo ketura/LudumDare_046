@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Hand : MonoBehaviour
+public class DisplayCard : MonoBehaviour
 {
-	public Card Slot1;
-	public Card Slot2;
-	public Card Slot3;
-	public Card Slot4;
-	public Card Slot5;
+	public Image IconImage;
+	public TMP_Text Textbox;
+	public Image CardBackground;
 
 	// Start is called before the first frame update
 	void Start()

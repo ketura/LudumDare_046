@@ -23,6 +23,9 @@ public class EndConditions : Singleton<EndConditions>
 
 	IEnumerator WhiteOutAndExit(string scene)
 	{
+		WhiteOutMask.enabled = true;
+		yield return new WaitForEndOfFrame();
+
 		for (float t = 0.01f; t < FadeoutTime; t += Time.deltaTime)
 		{
 			WhiteOutMask.color = Color.Lerp(Color.clear, Color.white, Mathf.Min(1, t / FadeoutTime));
