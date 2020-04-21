@@ -52,7 +52,7 @@ public class PartCard : Card
 	public float Modifier4;
 
 
-	public float HealthPercentage => CurrentHealth / MaxHealth;
+	public float HealthPercentage => Mathf.Max(CurrentHealth, MaxHealth / 2.0f) / (MaxHealth * 1.0f);
 
 	public float AdjustedModifier1 => Modifier1 * HealthPercentage;
 	public float AdjustedModifier2 => Modifier2 * HealthPercentage;

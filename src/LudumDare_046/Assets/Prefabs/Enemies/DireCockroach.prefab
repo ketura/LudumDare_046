@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.4339623, g: 0.12486649, b: 0.12486649, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 633797465025069003}
   - component: {fileID: 633797465025069002}
   m_Layer: 0
-  m_Name: Cockroach
+  m_Name: DireCockroach
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,25 +127,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10d7aecc57e92249ba7bb71d802b0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Cockroach
-  Health: 15
+  Name: Dire Cockroach
+  Health: 30
   DetectionRadius: 10
   MoveBehavior: {fileID: 633797465025069003}
   AttackBehavior: {fileID: 633797465025069002}
   DropTable:
-  - Chance: 1
-    CardType: 1
-    GeneTier: 0
-    MinCount: 2
-    MaxCount: 3
-  - Chance: 0.2
+  - Chance: 0.9
     CardType: 1
     GeneTier: 1
     MinCount: 1
+    MaxCount: 2
+  - Chance: 0.05
+    CardType: 1
+    GeneTier: 2
+    MinCount: 1
     MaxCount: 1
-  - Chance: 0.5
+  - Chance: 0.1
     CardType: 3
     GeneTier: 0
+    MinCount: 1
+    MaxCount: 1
+  - Chance: 0.01
+    CardType: 1
+    GeneTier: 3
+    MinCount: 1
+    MaxCount: 1
+  - Chance: 0.05
+    CardType: 1
+    GeneTier: 4
+    MinCount: 1
+    MaxCount: 1
+  - Chance: 0.1
+    CardType: 2
+    GeneTier: 1
     MinCount: 1
     MaxCount: 1
 --- !u!114 &633797465025069003
@@ -177,8 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1fb1d7c7d18934288f5d951acca45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Nibble
-  Damage: 3
+  Name: Bite
+  Damage: 5
   AttackRange: 1
   Windup: 0.5
   Cooldown: 1.5

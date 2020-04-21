@@ -35,6 +35,8 @@ public class AnitaStatConsolidator : MonoBehaviour
 
 	public CardCollection MasterCardDefinitions;
 
+	public GameObject Spotlight;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -127,23 +129,25 @@ public class AnitaStatConsolidator : MonoBehaviour
 		SpriteDisplay.UpdateTier(BodyPart.Legs, Legs.Tier);
 		SpriteDisplay.UpdateTier(BodyPart.Abdomen, Abdomen.Tier);
 
-		Anita.BiteDamage = Mathf.Max(Mathf.CeilToInt(Mandibles.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
-			Mathf.CeilToInt(Mandibles.Modifier1 * 0.1f));
+		Anita.BiteDamage = Mathf.CeilToInt((Mandibles.AdjustedModifier1 * 0.5f) + 
+			(Mathf.Max(Mathf.CeilToInt(Mandibles.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
+			Mathf.CeilToInt(Mandibles.Modifier1 * 0.1f)) * 0.5f));
 		Anita.BiteAttackRange = Mathf.Max(Mandibles.AdjustedModifier2, 0.5f);
 		Anita.BiteWindup = Mandibles.Modifier3;
 		Anita.BiteCooldown = Mandibles.Modifier4;
 
-		Anita.DetectionRadius = Mathf.Min(Antennae.AdjustedModifier1, 0.5f);
+		Anita.DetectionRadius = (Antennae.AdjustedModifier1 * 0.5f) + (Mathf.Max(Antennae.AdjustedModifier1, 0.5f) * 0.5f);
+		Spotlight.transform.localScale = new Vector3(Anita.DetectionRadius, Anita.DetectionRadius, Anita.DetectionRadius);
 		Anita.DropBonus = Mathf.FloorToInt(Antennae.AdjustedModifier3);
 		Anita.EvasionChance = Antennae.AdjustedModifier4 + Legs.AdjustedModifier2 + Thorax.AdjustedModifier3;
 
-		Anita.StingDamage = Mathf.Max(Mathf.CeilToInt(Abdomen.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
-			Mathf.CeilToInt(Abdomen.Modifier1 * 0.1f));
+		Anita.StingDamage = Mathf.CeilToInt((Abdomen.AdjustedModifier1 * 0.5f) + Mathf.Max(Mathf.CeilToInt(Abdomen.AdjustedModifier1 + (Mandibles.AdjustedModifier1 * (Legs.AdjustedModifier3 + Antennae.AdjustedModifier2))),
+			Mathf.CeilToInt(Abdomen.Modifier1 * 0.1f)));
 		Anita.StingAttackRange = Mathf.Max(Abdomen.AdjustedModifier2, 0.5f);
 		Anita.StingWindup = Abdomen.Modifier3;
 		Anita.StingCooldown = Abdomen.Modifier4;
 
-		Anita.MovementSpeed = Mathf.Max(Legs.AdjustedModifier1 * Thorax.AdjustedModifier2, 2.0f);
+		Anita.MovementSpeed = Mathf.Max(Legs.AdjustedModifier1 * (1 + Thorax.AdjustedModifier2), 2.0f);
 
 		Anita.DamageReflection = Thorax.AdjustedModifier1;
 

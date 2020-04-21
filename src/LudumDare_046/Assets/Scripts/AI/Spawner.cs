@@ -12,6 +12,8 @@ public class Spawner : MonoBehaviour
 
 	public float SecondsPerSpawn = 1;
 
+	public int MaxSpawns = 5;
+
 	private bool CanSpawn;
 
 	public bool Spawn = true;
@@ -58,7 +60,7 @@ public class Spawner : MonoBehaviour
 			CanSpawn = false;
 			yield return new WaitForSeconds(SecondsPerSpawn);
 
-			if (WorldMap.Instance.IsPaused || !Spawn)
+			if (WorldMap.Instance.IsPaused || !Spawn || Map.Creatures.Count >= MaxSpawns)
 				continue;
 
 			Debug.Log("Spawning...");

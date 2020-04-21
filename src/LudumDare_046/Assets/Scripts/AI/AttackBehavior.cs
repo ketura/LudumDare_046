@@ -13,6 +13,7 @@ public class AttackBehavior : AIBehavior
 	public float Windup = 0.5f;
 	public float Cooldown = 2.0f;
 
+	private CombatLog CombatLog;
 
 	public virtual bool CanAttack { get; protected set; }
 	public virtual bool IsAttacking { get; protected set; }
@@ -22,6 +23,8 @@ public class AttackBehavior : AIBehavior
 	{
 		base.Start();
 		CanAttack = true;
+
+		CombatLog = CombatLog.Instance;
 	}
 
 	public virtual void AttemptToAttack(Creature source, Creature target)
@@ -34,7 +37,7 @@ public class AttackBehavior : AIBehavior
 
 		if (Vector3.Distance(source.transform.position, target.transform.position) <= AttackRange)
 		{
-			Debug.Log($"{source.Name} winding up to attack {target.Name} with {this.Name} for {this.Damage}!");
+			CombatLog.LogItem($"{source.Name} winding up to attack {target.Name} with {this.Name}!");
 			StartAttack(source,target);
 		}
 
@@ -53,7 +56,7 @@ public class AttackBehavior : AIBehavior
 
 		if (Vector3.Distance(source.transform.position, target.transform.position) <= AttackRange)
 		{
-			Debug.Log($"{source.Name} attacking {target.Name} with {this.Name} for {this.Damage}!");
+			CombatLog.LogItem($"{source.Name} attacking {target.Name} with {this.Name} for {this.Damage}!");
 			target.Damage(Damage);
 			EngageCooldown();
 		}

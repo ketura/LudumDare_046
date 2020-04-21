@@ -28,4 +28,23 @@ public class CardCollection : Singleton<CardCollection>
 	{
 		return PartCards.Where(x => x.PartType == part).First();
 	}
+
+	public Card GetCard(CardType type, GeneTier tier, BodyPart part = BodyPart.None)
+	{
+		switch (type)
+		{
+			
+			case CardType.Gene:
+				return GeneCards.Where(x => x.Tier == tier).First();
+
+			case CardType.Part:
+				return PartCards.Where(x => x.Tier == tier && x.PartType == part).First();
+
+
+			case CardType.Blessing:
+			case CardType.None:
+			default:
+				return BlessingCard;
+		}
+	}
 }

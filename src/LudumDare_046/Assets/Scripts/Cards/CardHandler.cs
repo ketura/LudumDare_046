@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utilities;
 
-public class CardHandler : MonoBehaviour
+public class CardHandler : Singleton<CardHandler>
 {
 
 	private EventSystem EventSystem;
@@ -43,6 +44,8 @@ public class CardHandler : MonoBehaviour
 
 	public Deck DefaultDeck;
 
+	public Difficulty Difficulty;
+
 
 	public int SelectedHandSlot = 0;
 
@@ -50,17 +53,8 @@ public class CardHandler : MonoBehaviour
 	void Start()
 	{
 		EventSystem = EventSystem.current;
+		Difficulty = Difficulty.Instance;
 
-		WipeBoardClean();
-
-		DeselectAll();
-
-		InsertDefaultDeck();
-	}
-
-	IEnumerator DelayedStart()
-	{
-		yield return new WaitForSeconds(0.1f);
 		WipeBoardClean();
 
 		DeselectAll();
@@ -553,6 +547,8 @@ public class CardHandler : MonoBehaviour
 
 		DeselectAll();
 		RedrawAll();
+
+		Difficulty.IncreaseDifficulty();
 	}
 
 	public void InvokeCombine()
@@ -633,5 +629,14 @@ public class CardHandler : MonoBehaviour
 
 		DeselectAll();
 		RedrawAll();
+	}
+
+	public void InsertLoot(Vector3 originPoint, IEnumerable<Card> cards)
+	{
+		Debug.Log($"Received {cards.Count()} loot items!");
+
+		//do animation here
+
+		Deck.AddCardsToBottom(cards);
 	}
 }
